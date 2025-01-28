@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunil Ganta - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Smooth scroolling for user experince */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* styling for entire layout */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #f4f4f9; 
+        }
+
+        /* Header Section Style */
+
+        header {
+            background: #2c3e50; 
+            color: #ecf0f1; 
+            padding: 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header name role Styling */
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: #f8a39a; 
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #bdc3c7;
+        }
+
+        /* Contact info Styling */
+
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Bar Styling */
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: background 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background: #e74c3c;
+            color: #ffffff;
+        }
+
+        /* Main Content Styling */
+
+        main {
+            margin-top: 15rem; /* Space to ensure main content is below header */
+            padding: 2rem;
+            flex: 1;
+            background: #c9ccb5;
+        }
+
+        /* Section Styling */
+
+        section {
+            display: none; /* Hide all sections initially */
+            margin-bottom: 2rem;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        section.active {
+            display: block; /* Display the active section */
+        }
+
+        section h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50; /* Match the header for consistency */
+        }
+
+        /* Footer Styling */
+
+        footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        /* edia for menu to be vertical view on smaller device */
+        @media (max-width: 768px) {  
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    /* Hover effect for hobbies */
+    /* Hover effect for hobbies */
+    figure:hover div {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(-10px); /* Position the message above the icon */
+        transition: visibility 0.3s, opacity 0.3s, transform 0.3s ease-in-out;
+    }
+
+    /* Default hidden state for the hover message */
+    figure div {
+        position: absolute;
+        top: 50%; /* Position it above the center */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -120%); /* Adjust position above the icon */
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 10; /* Ensure it stays above other elements */
+    }
+
+    /* Icon and caption hover effects */
+    figure:hover .hobby-icon {
+        color: #007bff; /* Change icon color on hover */
+        transition: color 0.3s ease;
+    }
+
+    figure:hover .hobby-caption {
+        color: #007bff; /* Change caption color on hover */
+        transition: color 0.3s ease;
+    }
+
+}
+
+    </style> 
+    <script>
+        //Script to manage navigation and active sections
+        document.addEventListener("DOMContentLoaded", () => {
+        const navLinks = document.querySelectorAll("nav ul li a");
+        const sections = document.querySelectorAll("main section");
+
+        // Geting the URL hash to display the correct section by default
+        const hash = window.location.hash; // Get the URL hash
+        const defaultSection = hash ? document.querySelector(hash) : sections[0];
+        const defaultLink = hash ? document.querySelector(`a[href="${hash}"]`) : navLinks[0];
+
+        // Activating the default section and link
+        if (defaultSection) {
+            defaultSection.classList.add("active");
+            defaultLink.classList.add("active");
+        }
+
+        // Adding click event to each navigation links
+        navLinks.forEach(link => {
+            link.addEventListener("click", event => {
+                event.preventDefault();
+
+                // Removing active class from all sections and links
+                sections.forEach(section => section.classList.remove("active"));
+                navLinks.forEach(nav => nav.classList.remove("active"));
+
+                // Activate the clicked link and corresponding section
+                const target = document.querySelector(link.getAttribute("href"));
+                if (target) {
+                    target.classList.add("active");
+                }
+                link.classList.add("active");
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <header>
+        <h1 tabindex="1">Sunil Ganta</h1>
+        <p Software tabindex="2">Software Engineer</p>
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <a href="mailto:sunilganta96@gmail.com">sunilganta96@gmail.com</a>
+            <a href="tel:+15519983828">551-998-3828</a>
+            <a href="https://www.linkedin.com/in/sunil-ganta-profile/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Sunil0124" target="_blank">GitHub</a>
+        </div>
+        <!-- Navigation Menu -->
+        <nav>
+            <ul>
+                <li><a href="#summary" aria-label="Navigate to Summary section">Summary</a></li>
+                <li><a href="#experience" aria-label="Navigate to Work Experience section">Work Experience</a></li>
+                <li><a href="#education" aria-label="Navigate to Education section">Education</a></li>
+                <li><a href="#skills" aria-label="Navigate to Skills section">Skills</a></li>
+                <li><a href="#projects" aria-label="Navigate to Projects section">Projects</a></li>
+                <li><a href="#certifications" aria-label="Navigate to Certifications section">Certifications</a></li>
+                <li><a href="#hobbies" aria-label="Navigate to Hobbies section">Hobbies</a></li>
+                <li><a href="#contact" aria-label="Navigate to Contact section">Contact</a></li>
+            </ul>
+            
+        </nav>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <!-- Summary Section -->
+        <section id="summary" class="active">
+            <h2>Summary</h2>
+            <p>Seeking a <strong>Software Engineer internship</strong> or full-time opportunity to leverage over five years of 
+                experience in <abbr title="Quality Assurance">QA</abbr>, <em>software development</em>, and <mark>distributed systems</mark>. Currently pursuing 
+                a master’s degree in computer science to enhance technical expertise and contribute to innovative projects.</p>
+        </section>
+        <!-- Work Experince Section -->
+        <section id="experience">
+            <h2>Work Experience</h2>
+            <details>
+                <summary>Senior QA Analyst - Ryan India Tax Service Pvt Ltd </summary>
+                <p><span style="color: #007bff;">Hyderabad, India</span> | <span style="color: #28a745;">December 2020 - September 2023</span></p>
+                <ul>
+                    <li>In order to achieve a 25% increase in software release efficiency, involved in cross-functional team activities to gather
+                        and analyze requirements for new features, lead design implementation, and contribute to the development team in
+                        testing of software cycle using agile methodologies.</li>
+                    <li>Strengthened the Pinpoint (Tax) application by restructuring system architecture using microservices & Spring Boot,
+                        resulting in a 40% reduction in system response time and 25% increase in overall system scalability.</li>
+                    <li>Active involvement in managing stakeholders to maintain, deliver, and continuously improve software products.</li>
+                    <li>Executed intricate SQL queries to validate the consistency and precision of data.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>Junior Test Engineer - Clic Services Pvt Ltd</summary>
+                <p><span style="color: #007bff;">Hyderabad, India</span> | <span style="color: #28a745;">September 2018 - May 2020</span></p>
+                <ul>
+                    <li>Hands-on experience building dynamic, single-page applications (SPA) using React JS, including the use of functional
+                        components, hooks, and component lifecycle management.</li>
+                    <li>Experience working with TypeScript in conjunction with React for improved type safety and code scalability in
+                        complex applications.</li>
+                    <li>Gathered requirements and engaged with stakeholders to devise and implement routine software enhancements.</li>
+                    <li>Performed Smoke, Regression, and Automation testing on the application and collaborating with QA teams to
+                        identify and resolve potential software issues, thereby mitigating the need for manual effort in maintenance tasks
+                        highlighting 90% proficiency.</li>
+                    <li>Acquired proficiency in Selenium automation through cross-platform testing of both web and mobile applications.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>Customer Service Executive - Strateology IT Solutions Pvt Ltd</summary>
+                <p><span style="color: #007bff;">Hyderabad, India</span> | <span style="color: #28a745;">October 2017 - June 2018</span></p>
+                <ul>
+                    <li>Proctor examinations as and when scheduled either thru automated roster OR manual schedules.</li>
+                    <li>Validate and verify the identity of Student before taking the examination.</li>
+                    <li>Supervise the examination for the entire period of the examination and flag as and when needed depending on the
+                        student conduct during the examination.</li>
+                </ul>
+            </details>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education">
+            <h2>Education</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; background: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                <thead style="background: #2c3e50; color: #ecf0f1;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Degree</th>
+                        <th style="padding: 1rem; text-align: left;">Institution</th>
+                        <th style="padding: 1rem; text-align: left;">Location</th>
+                        <th style="padding: 1rem; text-align: left;">Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 1rem; border-bottom: 1px solid #ddd;">
+                            <strong>Bachelor's in Computer Science</strong>
+                        </td>
+                        <td style="padding: 1rem; border-bottom: 1px solid #ddd;">
+                            <img src="https://www.iare.ac.in/images/IARE_logo_small.png" alt="IARE Logo" style="width: 40px; vertical-align: middle;"> 
+                            Institute of Aeronautical Engineering (IARE)
+                        </td>
+                        <td style="padding: 1rem; border-bottom: 1px solid #ddd;">Hyderabad, India</td>
+                        <td style="padding: 1rem; border-bottom: 1px solid #ddd;">2013 - 2017</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;">
+                            <strong>Master's in Computer Science</strong>
+                        </td>
+                        <td style="padding: 1rem;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWG-Z57aI84sxsLnQVKEDQCt4GLL1YxLF9TCJdGZV_sQjQIjuU-tZfLOqvyAoCqLmbnv8&usqp=CAU" alt="LIU Logo" style="width: 40px; vertical-align: middle;"> 
+                            Long Island University, Brooklyn
+                        </td>
+                        <td style="padding: 1rem;">Brooklyn, NY, USA</td>
+                        <td style="padding: 1rem;">Expected 2025</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Skills Section -->
+
+        <section id="skills">
+            <h2>Skills</h2>
+            <fieldset>
+                <legend>Technical Skills</legend>
+                <label>HTML</label>
+                <progress value="90" max="100"></progress>
+                <label>CSS</label>
+                <progress value="85" max="100"></progress>
+                <label>JavaScript</label>
+                <progress value="80" max="100"></progress>
+                <label>ReactJs</label>
+                <progress value="80" max="100"></progress>
+                
+            </fieldset>
+        </section>
+
+        <!-- Projects Section -->
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <dl>
+                <dt><a href="https://github.com/Sunil0124/audio-webrtc-react" target="_blank">Audio Streaming System</a></dt>
+                <dd>Developed a real-time audio streaming platform using React.js and WebRTC for seamless communication.</dd>
+                <dd>Technologies used:
+                    <ul>
+                        <li>React.js</li>
+                        <li>WebRTC</li>
+                        <li>Simplepeer</li>
+                    </ul>
+                </dd>
+                <dd>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/demoVideo" frameborder="0" allowfullscreen></iframe>
+                </dd>
+        
+                <dt><a href="https://github.com/Sunil0124/food-hall-cafe" target="_blank">Food Hall Management</a></dt>
+                <dd>Designed a web app for menu and order management in food halls using MySQL and Python.</dd>
+                <dd>Technologies used:
+                    <ul>
+                        <li>React.js</li>
+                        <li>Node.js</li>
+                    </ul>
+                </dd>
+                <dd>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/demoVideo2" frameborder="0" allowfullscreen></iframe>
+                </dd>
+
+            </dl>
+        </section>
+
+        <!-- Certifications Section -->
+
+        <section id="certifications" class="certifications">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem; color: #495057;">Certifications</h2>
+            <div style="background: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                <dl style="margin: 0; padding: 0;">
+                    <dt style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; color: #007bff;">Certified Java Developer</dt>
+                    <dd style="margin-left: 1rem; margin-bottom: 1rem;">AWS certification validating expertise in Java programming and development.</dd>
+        
+                    <dt style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; color: #007bff;">Python - Coursera</dt>
+                    <dd style="margin-left: 1rem; margin-bottom: 1rem;">Advanced Python course covering machine learning basics and programming techniques.</dd>
+        
+                    <dt style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; position: relative; color: #007bff;">
+                        <span style="display: inline-block; background: #f8a39a; color: #fff; padding: 5px 10px; border-radius: 12px; font-size: 0.9rem; font-weight: bold;">Featured</span>
+                        MySQL - LinkedIn
+                    </dt>
+                    <dd style="margin-left: 1rem; margin-bottom: 1rem;">LinkedIn certification demonstrating proficiency in MySQL database management.</dd>
+                </dl>
+            </div>
+        </section>
+        
+
+        <!-- Hobbies Section -->
+         
+        <section id="hobbies" class="hobbies">
+            <h2>Hobbies</h2>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <!-- Basketball Hobby -->
+                <figure style="position: relative; text-align: center; cursor: pointer;">
+                    <span class="hobby-icon" style="font-size: 3rem;">🏀</span>
+                    <figcaption class="hobby-caption" style="margin-top: 0.5rem; font-size: 1.2rem; color: #495057;">Basketball</figcaption>
+                    <!-- Hover Info -->
+                    <div>Fan of Steph Curry</div>
+                </figure>
+        
+                <!-- Guitar Hobby -->
+                <figure style="position: relative; text-align: center; cursor: pointer;">
+                    <span class="hobby-icon" style="font-size: 3rem;">🎸</span>
+                    <figcaption class="hobby-caption" style="margin-top: 0.5rem; font-size: 1.2rem; color: #495057;">Playing Guitar</figcaption>
+                    <!-- Hover Info -->
+                    <div>Been Playing since childhood</div>
+                </figure>
+            </div>
+        </section>           
+
+    </style>
+                
+
+        <!-- Contact Section -->
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="media" class="responsive-media">
+            <h2>Media</h2>
+            <video controls>
+                <source src="media-demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+        
+    </main> <!-- Main Content Ends -->
+
+<!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Sunil Ganta. All rights reserved.</p>
+        <a href="#">Back to Top</a>
+    </footer>
+</body>
+</html>
